@@ -13,7 +13,7 @@
 
 /*────────────────────────────────────────────────────────────────────────────*/
 
-namespace nodepp { class gamepad_t {
+namespace nodepp { class gamepad_t : public generator_t {
 protected:
 
     struct NODE {
@@ -30,8 +30,8 @@ public:
 
     /*─······································································─*/
 
-    int next() const noexcept {
-    coStart
+    int next() noexcept {
+    coBegin
 
         if( XInputGetState( obj->deviceID, &obj->dpy ) == ERROR_SUCCESS ) {
 
@@ -69,7 +69,7 @@ public:
             coNext; memcpy( &obj->prev, &obj->dpy, sizeof(XINPUT_STATE) ); 
         }   coGoto(0);
     
-    coStop
+    coFinish
     }
 
     /*─······································································─*/

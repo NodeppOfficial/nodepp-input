@@ -13,7 +13,7 @@
 
 /*────────────────────────────────────────────────────────────────────────────*/
 
-namespace nodepp { class touch_t {
+namespace nodepp { class touch_t : public generator_t {
 protected:
 
     struct NODE {
@@ -29,12 +29,11 @@ public:
 
     /*─······································································─*/
 
-    int next() const noexcept {
-    coStart
+    int next() noexcept {
+    coBegin
 
-        do {
-            uint   idx = DefaultScreen( obj->dpy );
-            Window win = XRootWindow( obj->dpy, idx );
+        do{ uint   idx = DefaultScreen( obj->dpy );
+            Window win = XRootWindow  ( obj->dpy, idx );
 
             uchar mask[(XI_LASTEVENT + 7)/8] = {0};
             XISetMask(mask, XI_TouchUpdate);
@@ -70,7 +69,7 @@ public:
         
         coNext; } coGoto(1);
 
-    coStop
+    coFinish
     }
 
     /*─······································································─*/
@@ -145,7 +144,7 @@ public:
 
     touch_t ( int deviceID=0 ) noexcept : obj( new NODE() ) {
         obj->dpy = XOpenDisplay( nullptr ); if ( !obj->dpy ) { 
-            process::error("Unable to open X display"); 
+            throw except_t("Unable to open X display"); 
             return;
         }   obj->deviceID = deviceID; next();
     }

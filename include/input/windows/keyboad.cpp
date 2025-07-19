@@ -198,7 +198,7 @@
 
 /*────────────────────────────────────────────────────────────────────────────*/
 
-namespace nodepp { class keyboard_t {
+namespace nodepp { class keyboard_t : public generator_t {
 protected:
 
     struct NODE {
@@ -213,8 +213,8 @@ public:
 	
     /*─······································································─*/
 
-    int next() const noexcept {
-    coStart
+    int next() noexcept {
+    coBegin
 
         while( GetMessage( obj->msg, NULL, 0, 0 )==0 ){ coGoto(0); }
 		TranslateMessage(obj->msg); DispatchMessage(obj->msg);
@@ -236,7 +236,7 @@ public:
         }
 
     coGoto(0);
-    coStop
+    coFinish
     }
 	
     /*─······································································─*/

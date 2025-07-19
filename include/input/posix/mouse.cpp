@@ -13,7 +13,7 @@
 
 /*────────────────────────────────────────────────────────────────────────────*/
 
-namespace nodepp { class mouse_t {
+namespace nodepp { class mouse_t : public generator_t {
 protected: 
 
     struct NODE {
@@ -29,11 +29,10 @@ public:
 
     /*─······································································─*/
 
-    int next() const noexcept {
-    coStart
+    int next() noexcept {
+    coBegin
 
-        do {
-            auto events = ButtonPressMask | ButtonReleaseMask | ButtonMotionMask | PointerMotionMask;
+        do{ auto events = ButtonPressMask | ButtonReleaseMask | ButtonMotionMask | PointerMotionMask;
             Window win  = XRootWindow( obj->dpy, DefaultScreen( obj->dpy ) );
             XSelectInput( obj->dpy, win, events );
         } while(0); coYield(1);
@@ -64,7 +63,7 @@ public:
         
         coNext; } coGoto(1);
         
-    coStop
+    coFinish
     }
 
     /*─······································································─*/
@@ -134,7 +133,7 @@ public:
 
     mouse_t () noexcept : obj( new NODE() ) {
         obj->dpy = XOpenDisplay( nullptr ); if ( !obj->dpy ) { 
-            process::error("Unable to open X display"); 
+            throw except_t("Unable to open X display"); 
             return;
         }   next();
     }
