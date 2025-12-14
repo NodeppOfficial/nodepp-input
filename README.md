@@ -2,8 +2,39 @@
 
 This project provides a powerful and cross-platform solution for programmatically emulating various user inputs (keyboard, mouse, gamepad, and touch) on Windows, Linux, FreeBSD, and macOS, all within the NodePP asynchronous and event-driven C++ framework. Automate tasks, create interactive installations, or build testing tools by programmatically controlling user input.
 
-## Key Features
+## Dependencies & CMake Integration
+```bash
+- 🐧libxtst-dev: sudo apt install libxtst-dev
+- 🐧libx11-dev : sudo apt install libx11-dev
+- 🐧libxi-dev  : sudo apt install libxi-dev
+```
+```bash
+include(FetchContent)
 
+FetchContent_Declare(
+	nodepp
+	GIT_REPOSITORY   https://github.com/NodeppOfficial/nodepp
+	GIT_TAG          origin/main
+	GIT_PROGRESS     ON
+)
+FetchContent_MakeAvailable(nodepp)
+
+FetchContent_Declare(
+	nodepp-input
+	GIT_REPOSITORY   https://github.com/NodeppOfficial/nodepp-input
+	GIT_TAG          origin/main
+	GIT_PROGRESS     ON
+)
+FetchContent_MakeAvailable(nodepp-input)
+
+#[...]
+
+target_link_libraries( #[...]
+	PUBLIC nodepp nodepp-input #[...]
+)
+```
+
+## Key Features
 - **Cross-Platform Support:** Works seamlessly on Windows, Linux, FreeBSD, and macOS.
 - **Keyboard Emulation:** Simulate key presses, releases, and typing.
 - **Mouse Emulation:** Control mouse movement, clicks (left, right, middle, etc.), and scrolling.
@@ -11,13 +42,6 @@ This project provides a powerful and cross-platform solution for programmaticall
 - **Touch Input Emulation:** Simulate touch events (down, up, move) for touch-enabled devices.
 - **Asynchronous Operations:** Input events are triggered non-blockingly, fitting perfectly within NodePP's event-driven architecture.
 - **NodePP Integration:** Leverages the performance and concurrency of NodePP's C++ foundation for responsive input simulation.
-
-## Dependencies
-```bash
-- 🐧libxtst-dev: sudo apt install libxtst-dev
-- 🐧libx11-dev : sudo apt install libx11-dev
-- 🐧libxi-dev  : sudo apt install libxi-dev
-```
 
 ## Build & Run
 ```bash
@@ -49,3 +73,6 @@ void onMain(){
 
 }
 ```
+
+## License
+**Nodepp-Input** is distributed under the MIT License. See the LICENSE file for more details.
